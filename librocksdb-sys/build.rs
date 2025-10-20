@@ -479,7 +479,7 @@ fn main() {
     } else if target.contains("windows") {
         env::set_var("LIBCLANG_PATH", "C:\\Program Files\\LLVM\\bin");
     } else if target.contains("apple") {
-        env::set_var("LIBCLANG_PATH", "/usr/local/opt/llvm@20/lib");
+        env::set_var("LIBCLANG_PATH", "/usr/local/opt/llvm@17/lib");
     }
 
     bindgen_rocksdb();

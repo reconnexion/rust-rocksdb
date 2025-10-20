@@ -478,7 +478,7 @@ fn main() {
         env::set_var("LIBCLANG_PATH", "/usr/local/llvm17/lib");
     } else if target.contains("windows") {
         env::set_var("LIBCLANG_PATH", "C:\\Program Files\\LLVM\\bin");
-    } else if target.contains("apple") {
+    } else if target.contains("ios") {
         env::set_var("LIBCLANG_PATH", "/usr/local/opt/llvm/lib");
     }
 
@@ -491,7 +491,9 @@ fn main() {
     } else {
         let target = env::var("TARGET").unwrap();
         // according to https://github.com/alexcrichton/cc-rs/blob/master/src/lib.rs#L2189
-        if target.contains("apple") || target.contains("freebsd") || target.contains("openbsd") {
+        if target.contains("ios") {
+            println!("cargo:rustc-link-lib=dylib=stdc++");
+        } else if target.contains("apple") || target.contains("freebsd") || target.contains("openbsd") {
             println!("cargo:rustc-link-lib=dylib=c++");
         } else if target.contains("linux") {
             println!("cargo:rustc-link-lib=dylib=stdc++");

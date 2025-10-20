@@ -196,8 +196,8 @@ fn build_rocksdb() {
         config.define("ROCKSDB_PLATFORM_POSIX", None);
         config.define("ROCKSDB_LIB_IO_POSIX", None);
         env::set_var("IPHONEOS_DEPLOYMENT_TARGET", "12.0");
-        config.flag("-march=armv8-a+crc+crypto");
-        config.flag("-Wno-unused-function");
+        //config.flag("-march=armv8-a+crc+crypto");
+        //config.flag("-Wno-unused-function");
     } else if target.contains("darwin") {
         if !target.contains("aarch64-apple-darwin") {
             config.flag("-march=haswell");

@@ -189,7 +189,9 @@ fn build_rocksdb() {
 
     if target.contains("apple-ios") {
         config.define("OS_MACOSX", None);
-        config.define("IOS_CROSS_COMPILE", None);
+        if !target.contains("x86_64-apple-ios") {
+            config.define("IOS_CROSS_COMPILE", None);
+        }
         config.define("PLATFORM", "IOS");
         config.define("NIOSTATS_CONTEXT", None);
         config.define("NPERF_CONTEXT", None);

@@ -944,6 +944,23 @@ impl<T: ThreadMode> TransactionDB<T> {
         // and any resources (mem, files) are reclaimed.
         Ok(())
     }
+
+    /// Retrieves a RocksDB property and casts it to an integer.
+    /// Returns `None` if the property doesn't exist or isn't an integer.
+    /// Reported from later versions of rust-rocksdb.
+    pub fn property_int_value(&self, name: &str) -> Result<Option<u64>, Error> {
+        let prop = CString::new(name).map_err(|e| {
+            Error::new(format!("Failed to convert property name to CString: {e}"))
+        })?;
+        unsafe {
+            let mut value: u64 = 0;
+            if ffi::rocksdb_transactiondb_property_int(self.inner, prop.as_ptr(), &mut value) == 0 {
+                Ok(Some(value))
+            } else {
+                Ok(None)
+            }
+        }
+    }
 }
 
 impl TransactionDB<SingleThreaded> {

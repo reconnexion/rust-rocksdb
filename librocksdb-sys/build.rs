@@ -223,7 +223,9 @@ fn build_rocksdb() {
         config.define("_REENTRANT", None);
         config.flag("-fno-builtin-memcmp");
     } else if target.contains("linux") {
-        config.flag("-march=haswell");
+        if target.contains("x86_64") {
+            config.flag("-march=haswell");
+        }
         config.define("OS_LINUX", None);
         config.define("ROCKSDB_PLATFORM_POSIX", None);
         config.define("ROCKSDB_LIB_IO_POSIX", None);

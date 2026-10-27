@@ -475,13 +475,16 @@ fn main() {
         return;
         //update_submodules();
     }
-    let target = env::var("TARGET").unwrap();
-    if target.contains("openbsd") {
-        env::set_var("LIBCLANG_PATH", "/usr/local/llvm17/lib");
-    } else if target.contains("windows") {
-        env::set_var("LIBCLANG_PATH", "C:\\Program Files\\LLVM\\bin");
-    } else if target.contains("apple") {
-        env::set_var("LIBCLANG_PATH", "/usr/local/opt/llvm@17/lib");
+
+    if env::var("LIBCLANG_PATH").is_err() {
+        let target = env::var("TARGET").unwrap();
+        if target.contains("openbsd") {
+            env::set_var("LIBCLANG_PATH", "/usr/local/llvm17/lib");
+        } else if target.contains("windows") {
+            env::set_var("LIBCLANG_PATH", "C:\\Program Files\\LLVM\\bin");
+        } else if target.contains("apple") {
+            env::set_var("LIBCLANG_PATH", "/usr/local/opt/llvm@17/lib");
+        }
     }
 
     bindgen_rocksdb();
